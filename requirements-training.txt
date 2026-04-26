@@ -1,0 +1,20 @@
+# Dependencies used for training and evaluation, mainly on Google Colab.
+# Runtime demo dependencies remain in requirements.txt.
+
+# Hugging Face dataset loader for abhilash88/fer2013-enhanced.
+datasets
+
+# Model training backend.
+tensorflow==2.21.0
+
+# Evaluation metrics and classification report.
+scikit-learn
+
+# Plot training curves and confusion matrix.
+matplotlib
+seaborn
+
+# Image and array processing.
+numpy==2.4.4
+pillow
+

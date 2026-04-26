@@ -1,0 +1,15 @@
+.venv/
+.tmp/
+__pycache__/
+*.pyc
+
+# Local datasets can be large; keep only small instructions/placeholders in git/submission.
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Training outputs generated on Colab/local runs.
+reports/*
+!reports/.gitkeep
+
