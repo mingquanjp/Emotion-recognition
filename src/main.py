@@ -2,6 +2,7 @@ import argparse
 from collections import deque
 from concurrent.futures import ThreadPoolExecutor
 import os
+import platform
 import time
 from pathlib import Path
 
@@ -24,6 +25,42 @@ EMOTION_COLORS = {
     "surprise": (0, 255, 255),
     "neutral": (220, 220, 220),
 }
+
+
+def open_video_capture(source):
+    if isinstance(source, int) and platform.system() == "Darwin":
+        cap = cv2.VideoCapture(source, cv2.CAP_AVFOUNDATION)
+    else:
+        cap = cv2.VideoCapture(source)
+
+    if not cap.isOpened():
+        raise RuntimeError(
+            "Cannot open camera/video source. On macOS, allow Camera access for the app "
+            "running this script in System Settings > Privacy & Security > Camera. "
+            "If the wrong camera is selected, try --source 1 or --source 2."
+        )
+    return cap
+
+
+def read_initial_frame(cap, warmup_frames=5):
+    frame = None
+    ok = False
+    for _ in range(warmup_frames):
+        ok, frame = cap.read()
+        if ok and frame is not None:
+            break
+        time.sleep(0.05)
+
+    if not ok or frame is None:
+        raise RuntimeError(
+            "Camera opened but did not return frames. Check Camera permission, close other "
+            "apps using the webcam, or try another --source index."
+        )
+    return frame
+
+
+def is_nearly_black(frame, threshold=3.0):
+    return float(frame.mean()) < threshold
 
 
 def build_fast_detector():
@@ -207,9 +244,13 @@ def parse_args():
 def main():
     args = parse_args()
     source = int(args.source) if str(args.source).isdigit() else args.source
-    cap = cv2.VideoCapture(source)
-    if not cap.isOpened():
-        raise RuntimeError(f"Cannot open camera/video source: {args.source}")
+    cap = open_video_capture(source)
+    first_frame = read_initial_frame(cap)
+    if is_nearly_black(first_frame):
+        print(
+            "Warning: camera is returning almost-black frames. Check lens cover, room light, "
+            "camera privacy settings, or try another --source index."
+        )
 
     fast_detector = build_fast_detector() if args.mode == "fast" else None
     emotion_history = deque(maxlen=max(args.smooth, 1))
