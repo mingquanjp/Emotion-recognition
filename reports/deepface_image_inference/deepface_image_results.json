@@ -1,0 +1,170 @@
+[
+  {
+    "image_path": "image/crop_hppy1.png",
+    "output_image": "reports/deepface_image_inference/crop_hppy1_deepface.png",
+    "detector_backend": "opencv",
+    "num_faces": 1,
+    "faces": [
+      {
+        "face_index": 0,
+        "region": {
+          "x": 218,
+          "y": 196,
+          "w": 433,
+          "h": 433
+        },
+        "dominant_emotion": "happy",
+        "confidence_percentage": 96.6229248046875,
+        "top_3": [
+          {
+            "label": "happy",
+            "percentage": 96.6229248046875
+          },
+          {
+            "label": "neutral",
+            "percentage": 3.3770735263824463
+          },
+          {
+            "label": "surprise",
+            "percentage": 8.170463843271136e-06
+          }
+        ],
+        "emotion": {
+          "angry": 3.0672518561494777e-13,
+          "disgust": 1.467981003334013e-23,
+          "fear": 2.355485123899277e-15,
+          "happy": 96.6229248046875,
+          "sad": 5.831005817080737e-11,
+          "surprise": 8.170463843271136e-06,
+          "neutral": 3.3770735263824463
+        }
+      }
+    ]
+  },
+  {
+    "image_path": "image/full_angry.png",
+    "output_image": "reports/deepface_image_inference/full_angry_deepface.png",
+    "detector_backend": "opencv",
+    "num_faces": 1,
+    "faces": [
+      {
+        "face_index": 0,
+        "region": {
+          "x": 314,
+          "y": 83,
+          "w": 102,
+          "h": 102
+        },
+        "dominant_emotion": "angry",
+        "confidence_percentage": 100.0,
+        "top_3": [
+          {
+            "label": "angry",
+            "percentage": 100.0
+          },
+          {
+            "label": "fear",
+            "percentage": 3.4321683415328152e-06
+          },
+          {
+            "label": "sad",
+            "percentage": 7.829433101846917e-09
+          }
+        ],
+        "emotion": {
+          "angry": 100.0,
+          "disgust": 7.322296241563109e-11,
+          "fear": 3.4321683415328152e-06,
+          "happy": 1.136781778875467e-19,
+          "sad": 7.829433101846917e-09,
+          "surprise": 9.508047535674376e-16,
+          "neutral": 6.933535149966424e-15
+        }
+      }
+    ]
+  },
+  {
+    "image_path": "image/full_hppy1.png",
+    "output_image": "reports/deepface_image_inference/full_hppy1_deepface.png",
+    "detector_backend": "opencv",
+    "num_faces": 1,
+    "faces": [
+      {
+        "face_index": 0,
+        "region": {
+          "x": 310,
+          "y": 74,
+          "w": 135,
+          "h": 135
+        },
+        "dominant_emotion": "happy",
+        "confidence_percentage": 94.8656234741211,
+        "top_3": [
+          {
+            "label": "happy",
+            "percentage": 94.8656234741211
+          },
+          {
+            "label": "neutral",
+            "percentage": 5.13435697555542
+          },
+          {
+            "label": "surprise",
+            "percentage": 1.8493865354685113e-05
+          }
+        ],
+        "emotion": {
+          "angry": 1.179164751952122e-11,
+          "disgust": 3.984221645215711e-21,
+          "fear": 1.1084698019496117e-13,
+          "happy": 94.8656234741211,
+          "sad": 6.715276668067816e-10,
+          "surprise": 1.8493865354685113e-05,
+          "neutral": 5.13435697555542
+        }
+      }
+    ]
+  },
+  {
+    "image_path": "image/full_suprise.png",
+    "output_image": "reports/deepface_image_inference/full_suprise_deepface.png",
+    "detector_backend": "opencv",
+    "num_faces": 1,
+    "faces": [
+      {
+        "face_index": 0,
+        "region": {
+          "x": 295,
+          "y": 65,
+          "w": 168,
+          "h": 168
+        },
+        "dominant_emotion": "surprise",
+        "confidence_percentage": 99.98904418945312,
+        "top_3": [
+          {
+            "label": "surprise",
+            "percentage": 99.98904418945312
+          },
+          {
+            "label": "fear",
+            "percentage": 0.010947016067802906
+          },
+          {
+            "label": "happy",
+            "percentage": 1.0452515198267065e-05
+          }
+        ],
+        "emotion": {
+          "angry": 7.723646433532849e-08,
+          "disgust": 1.3153098402107766e-12,
+          "fear": 0.010947016067802906,
+          "happy": 1.0452515198267065e-05,
+          "sad": 5.501103714777855e-07,
+          "surprise": 99.98904418945312,
+          "neutral": 2.067633841917882e-10
+        }
+      }
+    ]
+  }
+]

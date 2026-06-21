@@ -1,0 +1,22 @@
+{
+  "uses_sample_weight": true,
+  "strategy": "Use sample_weight as the primary imbalance handling method during training.",
+  "train": {
+    "min": 1.0,
+    "mean": 1.7528566122055054,
+    "median": 1.4791837930679321,
+    "max": 16.433273315429688
+  },
+  "validation": {
+    "min": 1.0,
+    "mean": 1.75330650806427,
+    "median": 1.4791837930679321,
+    "max": 16.433273315429688
+  },
+  "test": {
+    "min": 1.0,
+    "mean": 1.7557907104492188,
+    "median": 1.4791837930679321,
+    "max": 16.433273315429688
+  }
+}

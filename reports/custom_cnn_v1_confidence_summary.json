@@ -1,0 +1,9 @@
+{
+  "num_correct": 3377,
+  "num_incorrect": 2013,
+  "overall_confidence_mean": 0.6773341298103333,
+  "correct_confidence_mean": 0.7542333602905273,
+  "incorrect_confidence_mean": 0.5483283400535583,
+  "correct_confidence_median": 0.8066141605377197,
+  "incorrect_confidence_median": 0.5162277221679688
+}

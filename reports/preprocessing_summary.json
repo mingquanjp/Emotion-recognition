@@ -1,0 +1,31 @@
+{
+  "train_shape": [
+    25117,
+    48,
+    48,
+    1
+  ],
+  "validation_shape": [
+    5380,
+    48,
+    48,
+    1
+  ],
+  "test_shape": [
+    5390,
+    48,
+    48,
+    1
+  ],
+  "x_dtype": "float32",
+  "y_dtype": "int64",
+  "weight_dtype": "float32",
+  "pixel_min": 0.0,
+  "pixel_max": 1.0,
+  "label_min": 0,
+  "label_max": 6,
+  "num_classes": 7,
+  "uses_sample_weight": true,
+  "sample_weight_min": 1.0,
+  "sample_weight_max": 16.433273315429688
+}

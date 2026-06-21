@@ -1,0 +1,39 @@
+{
+  "model_name": "custom_cnn_v1",
+  "epochs_requested": 50,
+  "batch_size": 64,
+  "optimizer_preferred": "AdamW",
+  "learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "loss": "sparse_categorical_crossentropy",
+  "monitor_metric": "val_loss",
+  "early_stopping_patience": 8,
+  "reduce_lr_patience": 3,
+  "reduce_lr_factor": 0.5,
+  "min_learning_rate": 1e-06,
+  "uses_sample_weight_from_dataset": true,
+  "uses_class_weight": false,
+  "evaluates_test_set_in_this_step": false,
+  "optimizer_used": "AdamW",
+  "epochs_trained": 44,
+  "best_val_loss_epoch": 36,
+  "best_val_loss": 1.8549973964691162,
+  "best_val_accuracy_epoch": 44,
+  "best_val_accuracy": 0.6381040811538696,
+  "best_val_top_2_accuracy_epoch": 43,
+  "best_val_top_2_accuracy": 0.8208178281784058,
+  "validation_results_from_best_checkpoint": {
+    "accuracy": 0.6269516944885254,
+    "loss": 1.8549973964691162,
+    "top_2_accuracy": 0.8137546181678772
+  },
+  "best_model_path": "models/custom_cnn_v1_best.keras",
+  "generated_files": [
+    "models/custom_cnn_v1_best.keras",
+    "reports/custom_cnn_v1_training_log.csv",
+    "reports/custom_cnn_v1_history.json",
+    "reports/custom_cnn_v1_training_curves.png",
+    "reports/custom_cnn_v1_validation_results.json",
+    "reports/custom_cnn_v1_training_summary.json"
+  ]
+}

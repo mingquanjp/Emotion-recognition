@@ -1,0 +1,77 @@
+{
+  "dataset_name": "abhilash88/fer2013-enhanced",
+  "splits": {
+    "train": {
+      "num_rows": 25117,
+      "columns": [
+        "sample_id",
+        "image",
+        "emotion",
+        "emotion_name",
+        "pixels",
+        "usage",
+        "quality_score",
+        "brightness",
+        "contrast",
+        "sample_weight",
+        "pixel_mean",
+        "pixel_std",
+        "pixel_min",
+        "pixel_max",
+        "edge_score",
+        "focus_score",
+        "brightness_score"
+      ],
+      "image_column": "image",
+      "label_column": "emotion"
+    },
+    "validation": {
+      "num_rows": 5380,
+      "columns": [
+        "sample_id",
+        "image",
+        "emotion",
+        "emotion_name",
+        "pixels",
+        "usage",
+        "quality_score",
+        "brightness",
+        "contrast",
+        "sample_weight",
+        "pixel_mean",
+        "pixel_std",
+        "pixel_min",
+        "pixel_max",
+        "edge_score",
+        "focus_score",
+        "brightness_score"
+      ],
+      "image_column": "image",
+      "label_column": "emotion"
+    },
+    "test": {
+      "num_rows": 5390,
+      "columns": [
+        "sample_id",
+        "image",
+        "emotion",
+        "emotion_name",
+        "pixels",
+        "usage",
+        "quality_score",
+        "brightness",
+        "contrast",
+        "sample_weight",
+        "pixel_mean",
+        "pixel_std",
+        "pixel_min",
+        "pixel_max",
+        "edge_score",
+        "focus_score",
+        "brightness_score"
+      ],
+      "image_column": "image",
+      "label_column": "emotion"
+    }
+  }
+}

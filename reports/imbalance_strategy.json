@@ -1,0 +1,6 @@
+{
+  "primary_training_weight": "sample_weight",
+  "fallback_training_weight": "class_weight",
+  "use_sample_weight_and_class_weight_together": false,
+  "reason": "FER2013-enhanced already provides sample_weight. class_weight is computed for analysis and fallback only, to avoid over-amplifying minority classes."
+}

@@ -1,0 +1,16 @@
+{
+  "haar": {
+    "total_images": 4,
+    "detected_images": 4,
+    "no_face_images": 0,
+    "face_detection_rate": 1.0,
+    "average_detect_time_ms": 17.655854250000047
+  },
+  "mtcnn": {
+    "total_images": 4,
+    "detected_images": 4,
+    "no_face_images": 0,
+    "face_detection_rate": 1.0,
+    "average_detect_time_ms": 321.70541675000015
+  }
+}

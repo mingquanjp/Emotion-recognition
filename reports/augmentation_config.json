@@ -1,0 +1,13 @@
+{
+  "random_flip": "horizontal",
+  "random_rotation": 0.02,
+  "random_zoom": null,
+  "random_translation_height": 0.02,
+  "random_translation_width": 0.02,
+  "applied_to": "train only",
+  "not_applied_to": [
+    "validation",
+    "test"
+  ],
+  "reason": "Use very light augmentation because FER images are small 48x48 grayscale faces and stronger transforms can blur facial details."
+}

@@ -1,0 +1,410 @@
+[
+  {
+    "image": "image/crop_hppy1.png",
+    "detector": "haar",
+    "detection": {
+      "detector": "haar",
+      "face_detected": true,
+      "x": 137,
+      "y": 118,
+      "w": 599,
+      "h": 599,
+      "confidence": null,
+      "detect_time_ms": 44.687124999999384
+    },
+    "prediction": {
+      "predicted_label_id": 3,
+      "predicted_label": "happy",
+      "confidence": 0.991881787776947,
+      "confidence_percentage": 99.18817901611328,
+      "top_predictions": [
+        {
+          "label_id": 3,
+          "label": "happy",
+          "probability": 0.991881787776947,
+          "percentage": 99.18817901611328
+        },
+        {
+          "label_id": 5,
+          "label": "surprise",
+          "probability": 0.006661185994744301,
+          "percentage": 0.6661186218261719
+        },
+        {
+          "label_id": 6,
+          "label": "neutral",
+          "probability": 0.0010826183715835214,
+          "percentage": 0.108261838555336
+        }
+      ],
+      "probabilities": {
+        "angry": 0.00024812028277665377,
+        "disgust": 7.354863384989585e-08,
+        "fear": 7.858366734581068e-05,
+        "happy": 0.991881787776947,
+        "sad": 4.759667717735283e-05,
+        "surprise": 0.006661185994744301,
+        "neutral": 0.0010826183715835214
+      }
+    },
+    "output_image": "reports/detector_comparison/haar_crop_hppy1.png",
+    "error": ""
+  },
+  {
+    "image": "image/crop_hppy1.png",
+    "detector": "mtcnn",
+    "detection": {
+      "detector": "mtcnn",
+      "face_detected": true,
+      "x": 213,
+      "y": 79,
+      "w": 466,
+      "h": 680,
+      "confidence": 0.9974324107170105,
+      "detect_time_ms": 593.7494590000006
+    },
+    "prediction": {
+      "predicted_label_id": 3,
+      "predicted_label": "happy",
+      "confidence": 0.9867199063301086,
+      "confidence_percentage": 98.67198944091797,
+      "top_predictions": [
+        {
+          "label_id": 3,
+          "label": "happy",
+          "probability": 0.9867199063301086,
+          "percentage": 98.67198944091797
+        },
+        {
+          "label_id": 6,
+          "label": "neutral",
+          "probability": 0.01087495218962431,
+          "percentage": 1.08749520778656
+        },
+        {
+          "label_id": 5,
+          "label": "surprise",
+          "probability": 0.0016847341321408749,
+          "percentage": 0.16847340762615204
+        }
+      ],
+      "probabilities": {
+        "angry": 0.00017975356604438275,
+        "disgust": 4.773360373633295e-08,
+        "fear": 8.529093611286953e-05,
+        "happy": 0.9867199063301086,
+        "sad": 0.00045534176751971245,
+        "surprise": 0.0016847341321408749,
+        "neutral": 0.01087495218962431
+      }
+    },
+    "output_image": "reports/detector_comparison/mtcnn_crop_hppy1.png",
+    "error": ""
+  },
+  {
+    "image": "image/full_angry.png",
+    "detector": "haar",
+    "detection": {
+      "detector": "haar",
+      "face_detected": true,
+      "x": 300,
+      "y": 69,
+      "w": 130,
+      "h": 130,
+      "confidence": null,
+      "detect_time_ms": 6.636625000000507
+    },
+    "prediction": {
+      "predicted_label_id": 0,
+      "predicted_label": "angry",
+      "confidence": 0.961888313293457,
+      "confidence_percentage": 96.18882751464844,
+      "top_predictions": [
+        {
+          "label_id": 0,
+          "label": "angry",
+          "probability": 0.961888313293457,
+          "percentage": 96.18882751464844
+        },
+        {
+          "label_id": 2,
+          "label": "fear",
+          "probability": 0.03516559302806854,
+          "percentage": 3.516559362411499
+        },
+        {
+          "label_id": 4,
+          "label": "sad",
+          "probability": 0.002131585031747818,
+          "percentage": 0.2131585031747818
+        }
+      ],
+      "probabilities": {
+        "angry": 0.961888313293457,
+        "disgust": 0.00033963038004003465,
+        "fear": 0.03516559302806854,
+        "happy": 1.1730574442481156e-05,
+        "sad": 0.002131585031747818,
+        "surprise": 0.00043067254591733217,
+        "neutral": 3.242234743083827e-05
+      }
+    },
+    "output_image": "reports/detector_comparison/haar_full_angry.png",
+    "error": ""
+  },
+  {
+    "image": "image/full_angry.png",
+    "detector": "mtcnn",
+    "detection": {
+      "detector": "mtcnn",
+      "face_detected": true,
+      "x": 310,
+      "y": 63,
+      "w": 109,
+      "h": 152,
+      "confidence": 0.9997747540473938,
+      "detect_time_ms": 220.692208
+    },
+    "prediction": {
+      "predicted_label_id": 0,
+      "predicted_label": "angry",
+      "confidence": 0.9907684922218323,
+      "confidence_percentage": 99.07685089111328,
+      "top_predictions": [
+        {
+          "label_id": 0,
+          "label": "angry",
+          "probability": 0.9907684922218323,
+          "percentage": 99.07685089111328
+        },
+        {
+          "label_id": 2,
+          "label": "fear",
+          "probability": 0.0064689600840210915,
+          "percentage": 0.6468960046768188
+        },
+        {
+          "label_id": 4,
+          "label": "sad",
+          "probability": 0.002397360047325492,
+          "percentage": 0.23973600566387177
+        }
+      ],
+      "probabilities": {
+        "angry": 0.9907684922218323,
+        "disgust": 9.660393698140979e-05,
+        "fear": 0.0064689600840210915,
+        "happy": 7.265877502504736e-05,
+        "sad": 0.002397360047325492,
+        "surprise": 0.00011977864778600633,
+        "neutral": 7.621570694027469e-05
+      }
+    },
+    "output_image": "reports/detector_comparison/mtcnn_full_angry.png",
+    "error": ""
+  },
+  {
+    "image": "image/full_hppy1.png",
+    "detector": "haar",
+    "detection": {
+      "detector": "haar",
+      "face_detected": true,
+      "x": 284,
+      "y": 50,
+      "w": 186,
+      "h": 186,
+      "confidence": null,
+      "detect_time_ms": 5.943792000000059
+    },
+    "prediction": {
+      "predicted_label_id": 3,
+      "predicted_label": "happy",
+      "confidence": 0.9872122406959534,
+      "confidence_percentage": 98.72122192382812,
+      "top_predictions": [
+        {
+          "label_id": 3,
+          "label": "happy",
+          "probability": 0.9872122406959534,
+          "percentage": 98.72122192382812
+        },
+        {
+          "label_id": 5,
+          "label": "surprise",
+          "probability": 0.010511836037039757,
+          "percentage": 1.0511835813522339
+        },
+        {
+          "label_id": 6,
+          "label": "neutral",
+          "probability": 0.0019286003662273288,
+          "percentage": 0.19286003708839417
+        }
+      ],
+      "probabilities": {
+        "angry": 0.0001985973067348823,
+        "disgust": 8.049637045814961e-08,
+        "fear": 8.653110853629187e-05,
+        "happy": 0.9872122406959534,
+        "sad": 6.222102092579007e-05,
+        "surprise": 0.010511836037039757,
+        "neutral": 0.0019286003662273288
+      }
+    },
+    "output_image": "reports/detector_comparison/haar_full_hppy1.png",
+    "error": ""
+  },
+  {
+    "image": "image/full_hppy1.png",
+    "detector": "mtcnn",
+    "detection": {
+      "detector": "mtcnn",
+      "face_detected": true,
+      "x": 301,
+      "y": 37,
+      "w": 148,
+      "h": 212,
+      "confidence": 0.9999903440475464,
+      "detect_time_ms": 260.01479100000057
+    },
+    "prediction": {
+      "predicted_label_id": 3,
+      "predicted_label": "happy",
+      "confidence": 0.9893454909324646,
+      "confidence_percentage": 98.9345474243164,
+      "top_predictions": [
+        {
+          "label_id": 3,
+          "label": "happy",
+          "probability": 0.9893454909324646,
+          "percentage": 98.9345474243164
+        },
+        {
+          "label_id": 6,
+          "label": "neutral",
+          "probability": 0.007730481680482626,
+          "percentage": 0.7730481624603271
+        },
+        {
+          "label_id": 5,
+          "label": "surprise",
+          "probability": 0.002313511446118355,
+          "percentage": 0.23135113716125488
+        }
+      ],
+      "probabilities": {
+        "angry": 0.00015531240205746144,
+        "disgust": 3.890699318276347e-08,
+        "fear": 7.897752220742404e-05,
+        "happy": 0.9893454909324646,
+        "sad": 0.0003761145635508001,
+        "surprise": 0.002313511446118355,
+        "neutral": 0.007730481680482626
+      }
+    },
+    "output_image": "reports/detector_comparison/mtcnn_full_hppy1.png",
+    "error": ""
+  },
+  {
+    "image": "image/full_suprise.png",
+    "detector": "haar",
+    "detection": {
+      "detector": "haar",
+      "face_detected": true,
+      "x": 270,
+      "y": 41,
+      "w": 215,
+      "h": 215,
+      "confidence": null,
+      "detect_time_ms": 13.355875000000239
+    },
+    "prediction": {
+      "predicted_label_id": 5,
+      "predicted_label": "surprise",
+      "confidence": 0.8477700352668762,
+      "confidence_percentage": 84.7770004272461,
+      "top_predictions": [
+        {
+          "label_id": 5,
+          "label": "surprise",
+          "probability": 0.8477700352668762,
+          "percentage": 84.7770004272461
+        },
+        {
+          "label_id": 2,
+          "label": "fear",
+          "probability": 0.14872480928897858,
+          "percentage": 14.872481346130371
+        },
+        {
+          "label_id": 3,
+          "label": "happy",
+          "probability": 0.0018345365533605218,
+          "percentage": 0.18345364928245544
+        }
+      ],
+      "probabilities": {
+        "angry": 0.0013101142831146717,
+        "disgust": 9.125896758632734e-05,
+        "fear": 0.14872480928897858,
+        "happy": 0.0018345365533605218,
+        "sad": 0.00021525987540371716,
+        "surprise": 0.8477700352668762,
+        "neutral": 5.397981294663623e-05
+      }
+    },
+    "output_image": "reports/detector_comparison/haar_full_suprise.png",
+    "error": ""
+  },
+  {
+    "image": "image/full_suprise.png",
+    "detector": "mtcnn",
+    "detection": {
+      "detector": "mtcnn",
+      "face_detected": true,
+      "x": 295,
+      "y": 35,
+      "w": 168,
+      "h": 251,
+      "confidence": 0.9992698431015015,
+      "detect_time_ms": 212.36520899999965
+    },
+    "prediction": {
+      "predicted_label_id": 5,
+      "predicted_label": "surprise",
+      "confidence": 0.7238346338272095,
+      "confidence_percentage": 72.38346099853516,
+      "top_predictions": [
+        {
+          "label_id": 5,
+          "label": "surprise",
+          "probability": 0.7238346338272095,
+          "percentage": 72.38346099853516
+        },
+        {
+          "label_id": 2,
+          "label": "fear",
+          "probability": 0.25020089745521545,
+          "percentage": 25.020090103149414
+        },
+        {
+          "label_id": 3,
+          "label": "happy",
+          "probability": 0.012925016693770885,
+          "percentage": 1.29250168800354
+        }
+      ],
+      "probabilities": {
+        "angry": 0.00706023583188653,
+        "disgust": 1.862211684056092e-05,
+        "fear": 0.25020089745521545,
+        "happy": 0.012925016693770885,
+        "sad": 0.0028318751137703657,
+        "surprise": 0.7238346338272095,
+        "neutral": 0.003128723707050085
+      }
+    },
+    "output_image": "reports/detector_comparison/mtcnn_full_suprise.png",
+    "error": ""
+  }
+]

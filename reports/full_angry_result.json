@@ -1,0 +1,44 @@
+{
+  "mode": "raw_image_with_haar_face_detector",
+  "image_path": "image/full_angry.png",
+  "model_path": "/Users/quanjp/Projects/Emotion-recognition/models/custom_cnn_v1_best.keras",
+  "face_box": {
+    "x": 300,
+    "y": 69,
+    "w": 130,
+    "h": 130
+  },
+  "predicted_label_id": 0,
+  "predicted_label": "angry",
+  "confidence": 0.961888313293457,
+  "confidence_percentage": 96.18882751464844,
+  "top_predictions": [
+    {
+      "label_id": 0,
+      "label": "angry",
+      "probability": 0.961888313293457,
+      "percentage": 96.18882751464844
+    },
+    {
+      "label_id": 2,
+      "label": "fear",
+      "probability": 0.03516559302806854,
+      "percentage": 3.516559362411499
+    },
+    {
+      "label_id": 4,
+      "label": "sad",
+      "probability": 0.002131585031747818,
+      "percentage": 0.2131585031747818
+    }
+  ],
+  "probabilities": {
+    "angry": 0.961888313293457,
+    "disgust": 0.00033963038004003465,
+    "fear": 0.03516559302806854,
+    "happy": 1.1730574442481156e-05,
+    "sad": 0.002131585031747818,
+    "surprise": 0.00043067254591733217,
+    "neutral": 3.242234743083827e-05
+  }
+}

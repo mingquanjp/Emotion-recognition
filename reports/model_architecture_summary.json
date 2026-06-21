@@ -1,0 +1,68 @@
+{
+  "model_name": "custom_cnn_v1",
+  "model_type": "custom_cnn",
+  "input_shape": [
+    48,
+    48,
+    1
+  ],
+  "num_classes": 7,
+  "conv_filters": [
+    32,
+    64,
+    128,
+    256
+  ],
+  "dropout_rates": [
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.4
+  ],
+  "dense_units": 256,
+  "learning_rate": 0.001,
+  "optimizer": "Adam",
+  "loss": "sparse_categorical_crossentropy",
+  "uses_pretrained_model": false,
+  "uses_deepface": false,
+  "training_done_in_this_step": false,
+  "keras_model_name": "custom_cnn_v1",
+  "total_params": 1242919,
+  "input_shape_runtime": [
+    null,
+    48,
+    48,
+    1
+  ],
+  "output_shape_runtime": [
+    null,
+    7
+  ],
+  "validation": {
+    "input_shape": [
+      null,
+      48,
+      48,
+      1
+    ],
+    "output_shape": [
+      null,
+      7
+    ],
+    "dummy_output_shape": [
+      2,
+      7
+    ],
+    "softmax_row_sums": [
+      1.0,
+      1.0
+    ],
+    "validation_passed": true
+  },
+  "notes": [
+    "Four convolution blocks are used for stronger feature extraction than a simple baseline CNN.",
+    "GlobalAveragePooling2D is used instead of Flatten to reduce overfitting risk.",
+    "The model is compiled but not trained in Step 6."
+  ]
+}

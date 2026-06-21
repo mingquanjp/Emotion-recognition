@@ -1,0 +1,91 @@
+{
+  "model_path": "models/custom_cnn_v1_best.keras",
+  "num_test_samples": 5390,
+  "num_correct": 3377,
+  "num_incorrect": 2013,
+  "weighted_test_results": {
+    "accuracy": 0.6265305876731873,
+    "loss": 1.9161301851272583,
+    "top_2_accuracy": 0.8159554600715637
+  },
+  "unweighted_test_metrics": {
+    "accuracy": 0.6265306122448979,
+    "balanced_accuracy": 0.6206592227573727,
+    "macro_precision": 0.5840412906133274,
+    "macro_recall": 0.6206592227573727,
+    "macro_f1": 0.5909271821402807,
+    "weighted_f1": 0.6219401984913676,
+    "top_2_accuracy": 0.8159554730983303,
+    "num_test_samples": 5390
+  },
+  "best_class_by_f1": {
+    "label": "happy",
+    "precision": 0.8724569640062598,
+    "recall": 0.8265381764269829,
+    "f1_score": 0.8488770460601447,
+    "support": 1349
+  },
+  "worst_class_by_f1": {
+    "label": "fear",
+    "precision": 0.5146299483648882,
+    "recall": 0.38881664499349805,
+    "f1_score": 0.44296296296296295,
+    "support": 769
+  },
+  "true_class_counts": {
+    "angry": 744,
+    "disgust": 83,
+    "fear": 769,
+    "happy": 1349,
+    "sad": 913,
+    "surprise": 601,
+    "neutral": 931
+  },
+  "predicted_class_counts": {
+    "angry": 697,
+    "disgust": 142,
+    "fear": 581,
+    "happy": 1278,
+    "sad": 677,
+    "surprise": 701,
+    "neutral": 1314
+  },
+  "confidence_summary": {
+    "num_correct": 3377,
+    "num_incorrect": 2013,
+    "overall_confidence_mean": 0.6773341298103333,
+    "correct_confidence_mean": 0.7542333602905273,
+    "incorrect_confidence_mean": 0.5483283400535583,
+    "correct_confidence_median": 0.8066141605377197,
+    "incorrect_confidence_median": 0.5162277221679688
+  },
+  "prediction_validation": {
+    "prediction_shape": [
+      5390,
+      7
+    ],
+    "predicted_label_shape": [
+      5390
+    ],
+    "confidence_min": 0.20718513429164886,
+    "confidence_mean": 0.6773341298103333,
+    "confidence_max": 0.9998732805252075,
+    "softmax_sum_min": 0.9999997615814209,
+    "softmax_sum_max": 1.000000238418579,
+    "validation_passed": true
+  },
+  "generated_files": [
+    "reports/custom_cnn_v1_weighted_test_results.json",
+    "reports/custom_cnn_v1_unweighted_test_metrics.json",
+    "reports/custom_cnn_v1_classification_report.json",
+    "reports/custom_cnn_v1_classification_report.csv",
+    "reports/custom_cnn_v1_confusion_matrix.json",
+    "reports/custom_cnn_v1_confusion_matrix.png",
+    "reports/custom_cnn_v1_confusion_matrix_normalized.png",
+    "reports/custom_cnn_v1_misclassified_examples.png",
+    "reports/custom_cnn_v1_misclassified_examples.json",
+    "reports/custom_cnn_v1_confidence_summary.json",
+    "reports/custom_cnn_v1_confidence_histogram.png",
+    "reports/custom_cnn_v1_evaluation_summary.json"
+  ]
+}

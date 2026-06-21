@@ -1,0 +1,96 @@
+{
+  "batch_size": 64,
+  "shuffle_buffer_size": 5000,
+  "cache_enabled": false,
+  "prefetch_enabled": true,
+  "train_augmentation_enabled": true,
+  "validation_augmentation_enabled": false,
+  "test_augmentation_enabled": false,
+  "uses_sample_weight": true,
+  "train_samples": 25117,
+  "validation_samples": 5380,
+  "test_samples": 5390,
+  "train_batches": 393,
+  "validation_batches": 85,
+  "test_batches": 85,
+  "output_tuple": [
+    "image_batch",
+    "label_batch",
+    "sample_weight_batch"
+  ],
+  "batch_validation": {
+    "train": {
+      "image_shape": [
+        64,
+        48,
+        48,
+        1
+      ],
+      "image_dtype": "float32",
+      "label_shape": [
+        64
+      ],
+      "label_dtype": "int64",
+      "weight_shape": [
+        64
+      ],
+      "weight_dtype": "float32",
+      "pixel_min": 0.0,
+      "pixel_max": 1.0,
+      "label_min": 0,
+      "label_max": 6,
+      "sample_weight_min": 1.0,
+      "sample_weight_max": 16.433273315429688
+    },
+    "validation": {
+      "image_shape": [
+        64,
+        48,
+        48,
+        1
+      ],
+      "image_dtype": "float32",
+      "label_shape": [
+        64
+      ],
+      "label_dtype": "int64",
+      "weight_shape": [
+        64
+      ],
+      "weight_dtype": "float32",
+      "pixel_min": 0.0,
+      "pixel_max": 1.0,
+      "label_min": 0,
+      "label_max": 6,
+      "sample_weight_min": 1.0,
+      "sample_weight_max": 16.433273315429688
+    },
+    "test": {
+      "image_shape": [
+        64,
+        48,
+        48,
+        1
+      ],
+      "image_dtype": "float32",
+      "label_shape": [
+        64
+      ],
+      "label_dtype": "int64",
+      "weight_shape": [
+        64
+      ],
+      "weight_dtype": "float32",
+      "pixel_min": 0.0,
+      "pixel_max": 1.0,
+      "label_min": 0,
+      "label_max": 6,
+      "sample_weight_min": 1.0,
+      "sample_weight_max": 2.246126890182495
+    }
+  },
+  "reports": [
+    "reports/tfdata_augmented_batch_preview.png",
+    "reports/tfdata_pipeline_summary.json"
+  ]
+}

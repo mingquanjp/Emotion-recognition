@@ -1,0 +1,54 @@
+{
+  "mode": "raw_image_with_face_detector",
+  "image_path": "image/full_hppy1.png",
+  "model_path": "/Users/quanjp/Projects/Emotion-recognition/models/custom_cnn_v1_best.keras",
+  "detection": {
+    "detector": "mtcnn",
+    "face_detected": true,
+    "x": 307,
+    "y": 36,
+    "w": 149,
+    "h": 215,
+    "confidence": 0.9999807476997375,
+    "detect_time_ms": 375.2827499999998
+  },
+  "face_box": {
+    "x": 307,
+    "y": 36,
+    "w": 149,
+    "h": 215
+  },
+  "predicted_label_id": 3,
+  "predicted_label": "happy",
+  "confidence": 0.9893039464950562,
+  "confidence_percentage": 98.9303970336914,
+  "top_predictions": [
+    {
+      "label_id": 3,
+      "label": "happy",
+      "probability": 0.9893039464950562,
+      "percentage": 98.9303970336914
+    },
+    {
+      "label_id": 6,
+      "label": "neutral",
+      "probability": 0.008435995317995548,
+      "percentage": 0.8435995578765869
+    },
+    {
+      "label_id": 5,
+      "label": "surprise",
+      "probability": 0.0016397032886743546,
+      "percentage": 0.16397032141685486
+    }
+  ],
+  "probabilities": {
+    "angry": 0.00016583481919951737,
+    "disgust": 3.3158279677536484e-08,
+    "fear": 7.420681504299864e-05,
+    "happy": 0.9893039464950562,
+    "sad": 0.0003803639265242964,
+    "surprise": 0.0016397032886743546,
+    "neutral": 0.008435995317995548
+  }
+}

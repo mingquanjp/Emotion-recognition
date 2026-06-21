@@ -1,0 +1,8 @@
+{
+  "majority_class": "happy",
+  "majority_count": 6292,
+  "minority_class": "disgust",
+  "minority_count": 382,
+  "imbalance_ratio": 16.47,
+  "note": "Dataset is imbalanced; later training should consider sample_weight or class_weight."
+}
