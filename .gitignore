@@ -10,6 +10,5 @@ data/processed/*
 !data/processed/.gitkeep
 
 # Training outputs generated on Colab/local runs.
-reports/*
-!reports/.gitkeep
-
+Latex_report/*
+team_contribution_plan.html
