@@ -1,19 +1,17 @@
-# Hệ thống nhận diện cảm xúc khuôn mặt theo thời gian thực
+# Facial Emotion Recognition - Custom CNN
 
-## 1. Giới thiệu đề tài
+## 1. Giới thiệu
 
-Dự án xây dựng một hệ thống nhận diện cảm xúc khuôn mặt theo thời gian thực bằng webcam. Hệ thống sử dụng các kỹ thuật thị giác máy tính và mô hình học sâu đã huấn luyện sẵn để:
+Dự án xây dựng hệ thống nhận diện cảm xúc khuôn mặt với hai phần chính:
 
-- Đọc luồng hình ảnh trực tiếp từ webcam.
-- Phát hiện khuôn mặt trong từng khung hình.
-- Phân loại cảm xúc khuôn mặt.
-- Hiển thị bounding box, nhãn cảm xúc, xác suất cảm xúc và FPS lên màn hình.
+1. Huấn luyện một mô hình **Custom CNN 4 block** trên dataset `abhilash88/fer2013-enhanced`.
+2. Tích hợp mô hình đã huấn luyện vào các luồng suy luận thực tế: ảnh crop mặt, ảnh nguyên bản có face detector và webcam theo thời gian thực.
 
-Đây là một ví dụ ứng dụng trí tuệ nhân tạo trong bài toán **Facial Emotion Recognition**. Hệ thống không tự huấn luyện mô hình từ đầu, mà tập trung vào việc tích hợp mô hình pretrained, xây dựng pipeline xử lý ảnh thời gian thực và đánh giá khả năng hoạt động trong môi trường webcam thực tế.
+Khác với bản thử nghiệm ban đầu dùng DeepFace pretrained, hướng chính của project là mô hình CNN do nhóm tự thiết kế, tự huấn luyện và tự đánh giá. DeepFace chỉ được giữ lại như một baseline tham khảo để so sánh cảm nhận thực tế.
 
-## 2. Các cảm xúc được nhận diện
+## 2. Nhãn cảm xúc
 
-Mô hình phân loại cảm xúc theo 7 nhãn:
+Mô hình phân loại ảnh khuôn mặt vào 7 nhãn:
 
 | Nhãn | Ý nghĩa |
 |---|---|
@@ -25,319 +23,305 @@ Mô hình phân loại cảm xúc theo 7 nhãn:
 | `surprise` | Ngạc nhiên |
 | `neutral` | Trung tính |
 
-Kết quả cuối cùng được chọn theo cảm xúc có xác suất cao nhất sau bước làm mượt.
-
-## 3. Công nghệ sử dụng
-
-| Thành phần | Vai trò |
-|---|---|
-| Python | Ngôn ngữ lập trình chính |
-| OpenCV | Đọc webcam, xử lý frame, vẽ bounding box và text |
-| DeepFace | Thư viện AI cung cấp mô hình nhận diện cảm xúc pretrained |
-| TensorFlow / Keras | Backend chạy mô hình học sâu |
-| MTCNN | Mô hình phát hiện khuôn mặt mặc định |
-| Haar Cascade OpenCV | Detector nhẹ hơn, dùng để so sánh với MTCNN |
-
-## 4. Pipeline xử lý
-
-Pipeline tổng quát:
+## 3. Pipeline tổng quát
 
 ```text
-Webcam
-  -> OpenCV đọc frame
-  -> phát hiện khuôn mặt
-  -> cắt và tiền xử lý vùng mặt
-  -> mô hình CNN phân loại cảm xúc
-  -> lấy xác suất 7 cảm xúc
-  -> làm mượt kết quả qua nhiều frame
-  -> vẽ bounding box, nhãn cảm xúc và FPS
-  -> hiển thị video realtime
+FER2013-enhanced
+  -> khảo sát dữ liệu và phân bố lớp
+  -> preprocessing ảnh về grayscale 48x48x1
+  -> xử lý mất cân bằng bằng sample_weight
+  -> augmentation nhẹ trên train set
+  -> đóng gói tf.data pipeline
+  -> huấn luyện Custom CNN 4 block
+  -> đánh giá bằng accuracy, F1, recall, confusion matrix
+  -> tích hợp inference ảnh và webcam
 ```
 
-Chi tiết từng bước:
-
-1. **Đọc frame từ webcam**
-
-   OpenCV sử dụng `cv2.VideoCapture(0)` để mở camera mặc định. Mỗi vòng lặp, chương trình đọc một frame ảnh từ webcam.
-
-2. **Phát hiện khuôn mặt**
-
-   Bản mặc định sử dụng MTCNN thông qua DeepFace:
-
-   ```text
-   DeepFace.analyze(..., detector_backend="mtcnn")
-   ```
-
-   MTCNN phát hiện vị trí khuôn mặt và trả về bounding box gồm tọa độ `x`, `y`, `w`, `h`.
-
-3. **Phân loại cảm xúc**
-
-   Sau khi có vùng khuôn mặt, DeepFace đưa ảnh mặt vào mô hình emotion pretrained. Mô hình trả về xác suất cho 7 lớp cảm xúc.
-
-4. **Làm mượt kết quả**
-
-   Dự đoán cảm xúc trên webcam thường bị nhảy giữa các frame. Vì vậy chương trình lưu lại một số kết quả gần nhất và lấy trung bình xác suất.
-
-   Tham số mặc định:
-
-   ```text
-   --smooth 8
-   ```
-
-   Nghĩa là lấy trung bình 8 lần dự đoán gần nhất.
-
-5. **Tối ưu realtime**
-
-   Việc chạy model trên mọi frame sẽ gây lag. Chương trình chỉ phân tích mỗi `N` frame:
-
-   ```text
-   --every 12
-   ```
-
-   Ngoài ra, phần phân tích AI được chạy trong background thread bằng `ThreadPoolExecutor`, giúp webcam vẫn hiển thị mượt trong khi model đang xử lý.
-
-6. **Hiển thị kết quả**
-
-   Chương trình vẽ:
-
-   - Bounding box quanh khuôn mặt.
-   - Nhãn cảm xúc chính.
-   - Xác suất cảm xúc.
-   - FPS.
-   - Trạng thái `Analyzing...` hoặc `No face detected`.
-
-## 5. Hai chế độ detector
-
-### 5.1. Chế độ mặc định: MTCNN
-
-Chạy bằng:
-
-```bat
-run.bat
-```
-
-Mặc định tương đương:
-
-```bat
-python src\main.py --mode deep --detector mtcnn
-```
-
-Ưu điểm:
-
-- Phát hiện khuôn mặt tốt hơn trong điều kiện thực tế.
-- Ổn hơn khi người dùng đeo kính, mặt hơi nghiêng hoặc ánh sáng không hoàn hảo.
-
-Nhược điểm:
-
-- Chậm hơn OpenCV Haar Cascade.
-- Cần tối ưu bằng `--every`, `--smooth` và background thread.
-
-### 5.2. Chế độ so sánh: OpenCV
-
-Chạy bằng:
-
-```bat
-run_opencv.bat
-```
-
-Tương đương:
-
-```bat
-python src\emotion_webcam_opencv.py
-```
-
-Ưu điểm:
-
-- Nhẹ hơn.
-- Có thể nhanh hơn trên máy yếu.
-
-Nhược điểm:
-
-- Dễ không phát hiện được mặt khi ánh sáng yếu, mặt bị nghiêng hoặc đeo kính.
-- Độ ổn định thấp hơn MTCNN trong thử nghiệm thực tế.
-
-## 6. Cấu trúc thư mục
+Khi chạy webcam hoặc ảnh nguyên bản, hệ thống có thêm bước face detector:
 
 ```text
-submission_emotion_demo/
-  src/
-    main.py                    # chương trình chính, mặc định dùng MTCNN
-    emotion_webcam_opencv.py   # bản so sánh dùng OpenCV detector
-  docs/
-    PROJECT_STRUCTURE.md       # mô tả cấu trúc project
-  assets/
-    .gitkeep                   # thư mục để ảnh minh họa nếu cần
-  .deepface/
-    weights/
-      facial_expression_model_weights.h5
-  requirements.txt             # danh sách thư viện cần cài
-  run.bat                      # chạy bản chính
-  run_opencv.bat               # chạy bản OpenCV
-  README.md                    # tài liệu hướng dẫn
+Ảnh/webcam frame
+  -> Haar hoặc MTCNN phát hiện khuôn mặt
+  -> crop vùng mặt
+  -> custom_cnn_inference.py tiền xử lý crop về 48x48x1
+  -> Custom CNN dự đoán xác suất 7 cảm xúc
+  -> vẽ bounding box, nhãn, confidence và FPS
 ```
 
-## 7. Cài đặt môi trường
+## 4. Phân công chính
 
-Yêu cầu:
+| Thành viên | MSSV | Phần chính |
+|---|---:|---|
+| Nguyễn Minh Quân | 20235816 | Trưởng nhóm; thiết kế và huấn luyện Custom CNN; cấu hình optimizer/loss/callbacks; lưu model tốt nhất; báo cáo. |
+| Đặng Hoàng Quân | 20235813 | Dataset, khảo sát dữ liệu, preprocessing, xử lý mất cân bằng, augmentation và `tf.data` pipeline. |
+| Đinh Văn Phạm Việt | 20235870 | Đánh giá mô hình trên test set, classification report, confusion matrix, confidence và phân tích lỗi sai. |
+| Đinh Hữu Nhật Minh | 20235778 | Inference ảnh thực tế, so sánh Haar/MTCNN, tích hợp webcam và kiểm chứng demo. |
 
-- Windows
-- Python 3.10 trở lên
-- Webcam
-- Internet khi cài thư viện lần đầu
+## 5. Cấu trúc quan trọng
 
-Tạo môi trường ảo:
+```text
+notebooks/
+  train_fer2013_enhanced_colab.ipynb   # notebook chính: dataset -> train -> evaluate
+
+src/
+  custom_cnn_inference.py              # lõi load model, preprocess face crop và predict
+  infer_image_custom_cnn.py            # suy luận ảnh đã crop mặt sẵn
+  infer_face_custom_cnn.py             # suy luận ảnh nguyên bản bằng detector + Custom CNN
+  face_detectors.py                    # Haar Cascade và MTCNN detector
+  compare_face_detectors.py            # so sánh Haar/MTCNN trên folder ảnh
+  main_custom_cnn.py                   # webcam realtime bằng Custom CNN
+  main.py                              # webcam baseline dùng DeepFace pretrained
+  list_cameras.py                      # dò camera index trên máy local
+
+models/
+  custom_cnn_v1_best.keras             # checkpoint tốt nhất từ Colab
+  labels.json                          # mapping id -> emotion label
+
+reports/
+  *.json, *.csv, *.png                 # kết quả khảo sát, train, evaluate, detector và inference
+```
+
+## 6. Môi trường
+
+Project được phát triển trên Python 3.10+.
+
+Cài môi trường local:
+
+```bash
+python -m venv .venv
+.venv/bin/python -m pip install --upgrade pip
+.venv/bin/python -m pip install -r requirements.txt
+```
+
+Nếu chạy trên Windows:
 
 ```bat
 python -m venv .venv
+.venv\Scripts\python -m pip install --upgrade pip
+.venv\Scripts\python -m pip install -r requirements.txt
 ```
 
-Kích hoạt môi trường:
+Lưu ý:
 
-```bat
-.venv\Scripts\activate
-```
+- Huấn luyện nên chạy trên Google Colab T4 bằng notebook trong `notebooks/`.
+- Local chủ yếu dùng để chạy inference ảnh, so sánh detector và webcam.
+- Để chạy Custom CNN local, cần có `models/custom_cnn_v1_best.keras` và `models/labels.json`.
 
-Cài thư viện:
+## 7. Huấn luyện và đánh giá trên Colab
 
-```bat
-python -m pip install -r requirements.txt
-```
-
-Sau khi cài xong, có thể chạy demo bằng file `.bat`.
-
-## 8. Cách chạy
-
-Chạy bản chính dùng MTCNN:
-
-```bat
-run.bat
-```
-
-Chạy bản so sánh dùng OpenCV:
-
-```bat
-run_opencv.bat
-```
-
-Thoát cửa sổ webcam bằng phím:
+Notebook chính:
 
 ```text
-q
+notebooks/train_fer2013_enhanced_colab.ipynb
 ```
 
-## 9. Các tham số tùy chỉnh
+Notebook này gồm các bước:
 
-### Chọn camera khác
+1. Tải dataset `abhilash88/fer2013-enhanced`.
+2. Khảo sát split, label mapping, phân bố lớp và chất lượng ảnh.
+3. Tiền xử lý ảnh thành tensor `48x48x1`.
+4. Xử lý mất cân bằng bằng `sample_weight` và tạo augmentation nhẹ.
+5. Tạo `tf.data.Dataset` cho train/validation/test.
+6. Xây Custom CNN 4 block.
+7. Train model với AdamW, sparse categorical crossentropy, ModelCheckpoint, EarlyStopping và ReduceLROnPlateau.
+8. Đánh giá test set bằng accuracy, balanced accuracy, precision, recall, F1-score, top-2 accuracy và confusion matrix.
 
-Nếu máy có nhiều camera:
-
-```bat
-run.bat --source 1
-```
-
-Camera mặc định là:
+Sau khi train xong trên Colab, tải các file quan trọng về local:
 
 ```text
---source 0
+models/custom_cnn_v1_best.keras
+models/labels.json
+reports/custom_cnn_v1_*.json
+reports/custom_cnn_v1_*.csv
+reports/custom_cnn_v1_*.png
 ```
 
-### Giảm lag
+## 8. Chạy webcam bằng Custom CNN
 
-Tăng số frame bỏ qua giữa các lần phân tích:
+Đây là lệnh webcam chính của project:
+
+```bash
+.venv/bin/python src/main_custom_cnn.py --source 0
+```
+
+Trên Windows:
 
 ```bat
-run.bat --every 20
+.venv\Scripts\python src\main_custom_cnn.py --source 0
 ```
 
-Giá trị càng lớn thì chương trình càng nhẹ, nhưng cảm xúc cập nhật chậm hơn.
-
-### Phản hồi nhanh hơn
-
-```bat
-run.bat --every 6
-```
-
-Giá trị nhỏ giúp cảm xúc cập nhật nhanh hơn, nhưng có thể gây giật hơn.
-
-### Làm mượt kết quả hơn
-
-```bat
-run.bat --smooth 12
-```
-
-Giá trị `smooth` càng lớn thì kết quả ổn định hơn, nhưng phản ứng với thay đổi cảm xúc chậm hơn.
-
-### Chạy OpenCV detector từ file chính
-
-```bat
-run.bat --mode deep --detector opencv
-```
-
-### Chạy mode fast
-
-```bat
-run.bat --mode fast
-```
-
-Mode này dùng OpenCV Haar Cascade để phát hiện mặt, sau đó chỉ đưa vùng mặt vào mô hình emotion. Trên một số điều kiện webcam, mode này có thể nhanh nhưng dễ hụt mặt hơn MTCNN.
-
-## 10. Mô hình sử dụng
-
-### 10.1. MTCNN
-
-MTCNN là mô hình phát hiện khuôn mặt theo kiến trúc cascade gồm 3 mạng:
-
-- **P-Net**: tạo các vùng ứng viên có thể chứa khuôn mặt.
-- **R-Net**: lọc và tinh chỉnh bounding box.
-- **O-Net**: xác nhận khuôn mặt và dự đoán landmark.
-
-Trong project này, MTCNN được sử dụng để tìm vị trí khuôn mặt trong frame webcam.
-
-### 10.2. DeepFace Emotion Model
-
-DeepFace cung cấp mô hình phân loại cảm xúc pretrained. Ảnh khuôn mặt được tiền xử lý và đưa vào mô hình CNN. Mô hình trả về xác suất cho 7 cảm xúc.
-
-File weights được đặt tại:
+Mặc định script dùng:
 
 ```text
-.deepface/weights/facial_expression_model_weights.h5
+--detector mtcnn
+--every 8
+--smooth 8
+--padding 0.18
+--top-k 3
 ```
 
-Việc để sẵn file weights giúp demo không cần tải model lại khi chạy lần đầu.
+Ý nghĩa:
 
-## 11. Đánh giá theo PEAS
+- `--source 0`: dùng camera index 0.
+- `--detector mtcnn`: dùng MTCNN để tìm khuôn mặt trước khi đưa vào Custom CNN.
+- `--every 8`: chỉ phân tích mỗi 8 frame để giảm lag.
+- `--smooth 8`: lấy trung bình xác suất của 8 lần dự đoán gần nhất để kết quả đỡ nhảy.
+- `--padding 0.18`: mở rộng bounding box quanh mặt để không cắt mất vùng trán/cằm.
+- `--top-k 3`: hiển thị 3 cảm xúc có xác suất cao nhất.
 
-| Thành phần | Mô tả |
-|---|---|
-| Performance Measure | Độ chính xác phát hiện khuôn mặt, độ hợp lý của nhãn cảm xúc, FPS, độ trễ cập nhật cảm xúc |
-| Environment | Người dùng ngồi trước webcam trong phòng học hoặc phòng cá nhân, ánh sáng có thể thay đổi |
-| Actuators | Hiển thị bounding box, nhãn cảm xúc, xác suất, FPS và trạng thái lên cửa sổ video |
-| Sensors | Webcam, frame ảnh từ OpenCV, detector khuôn mặt, mô hình emotion |
+Thoát cửa sổ webcam bằng phím `q`.
 
-## 12. Hạn chế
+Nếu camera mặc định không đúng, dò camera bằng:
 
-Hệ thống còn một số hạn chế:
+```bash
+.venv/bin/python src/list_cameras.py --max-index 5
+```
 
-- Kết quả cảm xúc phụ thuộc mạnh vào ánh sáng.
-- Webcam bị cháy sáng hoặc thiếu sáng có thể làm model dự đoán sai.
-- Kính, tóc che mắt, góc mặt nghiêng có thể ảnh hưởng tới cả detector và emotion model.
-- Mô hình emotion pretrained không đảm bảo chính xác tuyệt đối trong mọi trường hợp.
-- Một số cảm xúc gần nhau như `happy`, `surprise`, `fear` có thể bị nhầm lẫn.
-- Hệ thống hiện chỉ phục vụ demo realtime, chưa có chức năng lưu log hoặc thống kê kết quả.
+Sau đó thử camera khác:
 
-## 13. Hướng phát triển
+```bash
+.venv/bin/python src/main_custom_cnn.py --source 1
+```
 
-Một số hướng có thể cải thiện:
+Nếu muốn dùng Haar Cascade thay vì MTCNN:
 
-- Thu thập dữ liệu cảm xúc riêng và fine-tune mô hình.
-- Thử các detector mạnh hơn như RetinaFace hoặc YOLO face detector.
-- Thêm chức năng lưu kết quả theo thời gian.
-- Thêm giao diện người dùng thay vì chỉ dùng cửa sổ OpenCV.
-- Đánh giá định lượng trên tập ảnh có nhãn thay vì chỉ quan sát trực tiếp qua webcam.
+```bash
+.venv/bin/python src/main_custom_cnn.py --source 0 --detector haar
+```
 
-## 14. Tài liệu tham khảo
+Nếu muốn lưu log từng lần phân tích webcam:
 
-- DeepFace: https://github.com/serengil/deepface
+```bash
+.venv/bin/python src/main_custom_cnn.py --source 0 --save-log
+```
+
+Log sẽ được lưu vào:
+
+```text
+reports/webcam_logs/
+```
+
+## 9. Chạy inference trên ảnh
+
+### 9.1. Ảnh đã crop mặt sẵn
+
+Dùng khi ảnh đầu vào chỉ chứa vùng mặt:
+
+```bash
+.venv/bin/python src/infer_image_custom_cnn.py \
+  --image image/crop_hppy1.png \
+  --output-image reports/crop_hppy1_result.png \
+  --output-json reports/crop_hppy1_result.json
+```
+
+Script này không chạy face detector. Nó đưa ảnh crop trực tiếp qua `custom_cnn_inference.py` để preprocess và predict.
+
+### 9.2. Ảnh nguyên bản có nền
+
+Dùng khi ảnh đầu vào là ảnh bình thường, chưa crop mặt:
+
+```bash
+.venv/bin/python src/infer_face_custom_cnn.py \
+  --image image/full_hppy1.png \
+  --detector mtcnn \
+  --output-image reports/full_hppy1_result.png \
+  --output-json reports/full_hppy1_result.json
+```
+
+Có thể đổi sang Haar:
+
+```bash
+.venv/bin/python src/infer_face_custom_cnn.py \
+  --image image/full_hppy1.png \
+  --detector haar
+```
+
+Luồng xử lý của script này:
+
+```text
+ảnh nguyên bản -> face detector -> crop mặt -> preprocess 48x48x1 -> Custom CNN predict
+```
+
+## 10. So sánh Haar và MTCNN
+
+Để tạo kết quả so sánh detector trên các ảnh trong folder `image/`:
+
+```bash
+.venv/bin/python src/compare_face_detectors.py --image-dir image
+```
+
+Kết quả được lưu vào:
+
+```text
+reports/detector_comparison/
+  detector_comparison.csv
+  detector_comparison.json
+  detector_comparison_summary.json
+  haar_*.png
+  mtcnn_*.png
+```
+
+Ý nghĩa báo cáo:
+
+- Haar Cascade thường nhanh hơn nhưng nhạy với ánh sáng, góc mặt và chất lượng ảnh.
+- MTCNN chậm hơn nhưng ổn định hơn trong nhiều ảnh thực tế.
+- Custom CNN chỉ phân loại cảm xúc sau khi đã có vùng mặt; vì vậy chất lượng detector ảnh hưởng trực tiếp tới kết quả cuối.
+
+## 11. DeepFace baseline
+
+File [src/main.py](src/main.py) là bản webcam dùng DeepFace pretrained. Đây không phải hướng chính của nhóm, nhưng được giữ lại để đối chiếu:
+
+```bash
+.venv/bin/python src/main.py --mode fast --source 0
+```
+
+Nên hiểu phần này là baseline tham khảo:
+
+- DeepFace dùng mô hình pretrained, có thể cho kết quả thực tế tốt hơn trong một số ảnh.
+- Custom CNN là phần đóng góp chính vì nhóm tự xử lý dữ liệu, tự thiết kế, tự huấn luyện và tự đánh giá.
+
+## 12. Vai trò của `custom_cnn_inference.py`
+
+`src/custom_cnn_inference.py` là module trung gian giữa model đã train và các script chạy thực tế. File này không train lại model. Nhiệm vụ của nó là:
+
+- Load `models/custom_cnn_v1_best.keras`.
+- Load `models/labels.json`.
+- Dựng lại kiến trúc `custom_cnn_v1` khi cần để tránh lỗi khác phiên bản TensorFlow/Keras.
+- Chuyển ảnh mặt sang grayscale.
+- Resize về `48x48`.
+- Normalize pixel về `[0, 1]`.
+- Reshape thành batch `(1, 48, 48, 1)`.
+- Chạy `model.predict`.
+- Trả về top-k cảm xúc và xác suất của đủ 7 lớp.
+
+Các file `infer_image_custom_cnn.py`, `infer_face_custom_cnn.py`, `compare_face_detectors.py` và `main_custom_cnn.py` đều dùng lại module này.
+
+## 13. Kết quả chính
+
+Mô hình Custom CNN 4 block đạt kết quả test xấp xỉ:
+
+| Chỉ số | Giá trị |
+|---|---:|
+| Test accuracy | 62.65% |
+| Balanced accuracy | 62.07% |
+| Macro F1-score | 59.09% |
+| Weighted F1-score | 62.19% |
+| Top-2 accuracy | 81.60% |
+
+Kết quả này phù hợp với độ khó của FER2013-enhanced: ảnh nhỏ `48x48`, grayscale, nhiều nhãn cảm xúc gần nhau và mất cân bằng lớp mạnh, đặc biệt lớp `disgust` có ít mẫu hơn nhiều so với `happy`.
+
+## 14. Hạn chế
+
+- Dataset huấn luyện là ảnh grayscale 48x48, trong khi ảnh webcam thực tế là ảnh màu, kích thước lớn và chịu ảnh hưởng ánh sáng.
+- Các cảm xúc như `fear`, `sad`, `disgust` dễ nhầm với `neutral`, `angry` hoặc `surprise`.
+- Face detector và emotion classifier là hai bước riêng; detector crop lệch sẽ làm classifier dự đoán kém.
+- MTCNN ổn định hơn Haar nhưng chậm hơn.
+- Webcam thực tế có thể bị nhiễu, cháy sáng, thiếu sáng hoặc lệch góc mặt.
+
+## 15. Tài liệu tham khảo
+
+- FER2013-enhanced dataset: `abhilash88/fer2013-enhanced`
+- TensorFlow / Keras: https://www.tensorflow.org/
 - OpenCV: https://opencv.org/
-- TensorFlow: https://www.tensorflow.org/
-- MTCNN paper: Joint Face Detection and Alignment using Multi-task Cascaded Convolutional Networks
+- MTCNN: Joint Face Detection and Alignment using Multi-task Cascaded Convolutional Networks
+- DeepFace: https://github.com/serengil/deepface
