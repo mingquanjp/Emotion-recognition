@@ -5,7 +5,7 @@
 datasets
 
 # Model training backend.
-tensorflow==2.21.0
+tensorflow==2.20.0
 
 # Evaluation metrics and classification report.
 scikit-learn
@@ -15,6 +15,6 @@ matplotlib
 seaborn
 
 # Image and array processing.
-numpy==2.4.4
+numpy==2.0.2
 pillow
 

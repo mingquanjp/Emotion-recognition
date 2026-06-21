@@ -4,17 +4,17 @@ deepface==0.0.99
 
 # Deep learning backend used by DeepFace emotion models.
 # TensorFlow executes the pretrained CNN model.
-tensorflow==2.21.0
+tensorflow==2.20.0
 
 # Compatibility package required by DeepFace/TensorFlow for Keras-based models.
-tf-keras==2.21.0
+tf-keras==2.20.0
 
 # Webcam access, frame processing, drawing bounding boxes and text overlays.
 opencv-python==4.13.0.92
 
 # Face detector used by the default demo pipeline.
 # MTCNN is more accurate than Haar Cascade in many webcam conditions.
-mtcnn==1.0.0
+mtcnn==0.1.1
 
 # Numerical array processing used by OpenCV, TensorFlow and post-processing.
-numpy==2.4.4
+numpy==2.0.2
